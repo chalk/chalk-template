@@ -11,7 +11,7 @@
 		"node": ">=12"
 	},
 	"scripts": {
-		"test": "xo && ava test/index.js && cross-env FORCE_COLOR=0 ava test/no-color.js && cross-env FORCE_COLOR=3 ava test/full-color.js && tsd"
+		"test": "xo && ava test/index.js && cross-env FORCE_COLOR=0 ava test/no-color.js && cross-env FORCE_COLOR=3 TERM=dumb ava test/full-color.js && tsd"
 	},
 	"files": [
 		"index.js",
