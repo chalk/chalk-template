@@ -1,6 +1,6 @@
 # chalk-template
 
-> TODO
+> Use [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) with [chalk](https://github.com/chalk/chalk)
 
 ## Install
 
@@ -8,17 +8,24 @@
 $ npm install chalk-template
 ```
 
+[`chalk`](https://github.com/chalk/chalk) is a required peer dependency.
+
 ## Usage
 
 ```js
 import chalkTemplate from 'chalk-template';
+import chalk from 'chalk';
 
-//
+const log = console.log;
+
+log(chalkTemplate`
+CPU: {red ${cpu.totalPercent}%}
+RAM: {green ${ram.used / ram.total * 100}%}
+DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
+`);
+
+log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
 ```
-
-## API
-
-### chalkTemplate()
 
 ## Related
 
