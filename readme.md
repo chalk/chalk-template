@@ -1,6 +1,6 @@
 # chalk-template
 
-> Use [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) with [chalk](https://github.com/chalk/chalk)
+> Use [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates) with [Chalk](https://github.com/chalk/chalk)
 
 ## Install
 
