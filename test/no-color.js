@@ -51,7 +51,9 @@ test('correctly parses unicode/hex escapes', t => {
 });
 
 test('throws if an extra unescaped } is found', t => {
-	t.throws(() => chalkTemplate`{red hi!}}`, {
+	t.throws(() => {
+		chalkTemplate`{red hi!}}`
+	}, {
 		message: 'Found extraneous } in Chalk template literal',
 	});
 });

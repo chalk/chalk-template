@@ -19,17 +19,23 @@ test('properly handle escapes', t => {
 });
 
 test('throw if there is an unclosed block', t => {
-	t.throws(() => chalkTemplate`{bold this shouldn't work ever\}`, {
+	t.throws(() => {
+		chalkTemplate`{bold this shouldn't work ever\}`
+	}, {
 		message: 'Chalk template literal is missing 1 closing bracket (`}`)',
 	});
 
-	t.throws(() => chalkTemplate`{bold this shouldn't {inverse appear {underline ever\} :) \}`, {
+	t.throws(() => {
+		chalkTemplate`{bold this shouldn't {inverse appear {underline ever\} :) \}`
+	}, {
 		message: 'Chalk template literal is missing 3 closing brackets (`}`)',
 	});
 });
 
 test('throw if there is an invalid style', t => {
-	t.throws(() => chalkTemplate`{abadstylethatdoesntexist this shouldn't work ever}`, {
+	t.throws(() => {
+		chalkTemplate`{abadstylethatdoesntexist this shouldn't work ever}`
+	}, {
 		message: 'Unknown Chalk style: abadstylethatdoesntexist',
 	});
 });

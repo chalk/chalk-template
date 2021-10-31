@@ -42,14 +42,13 @@
 		"command-line",
 		"text"
 	],
+	"dependencies": {
+		"chalk": "^4.1.2"
+	},
 	"devDependencies": {
 		"ava": "^3.15.0",
-		"chalk": "^4.1.2",
 		"cross-env": "^7.0.3",
 		"tsd": "^0.18.0",
 		"xo": "^0.45.0"
-	},
-	"peerDependencies": {
-		"chalk": ">=4"
 	}
 }
