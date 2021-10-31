@@ -3,7 +3,7 @@ Use a template string.
 
 @example
 ```
-import chalkTemplate from 'chalk';
+import chalkTemplate from 'chalk-template';
 
 log(chalkTemplate`
 CPU: {red ${cpu.totalPercent}%}
@@ -14,7 +14,7 @@ DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 
 @example
 ```
-import chalkTemplate from 'chalk';
+import chalkTemplate from 'chalk-template';
 import chalk from 'chalk';
 
 log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));

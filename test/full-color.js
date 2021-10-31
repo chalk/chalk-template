@@ -19,28 +19,19 @@ test('properly handle escapes', t => {
 });
 
 test('throw if there is an unclosed block', t => {
-	try {
-		console.log(chalkTemplate`{bold this shouldn't appear ever\}`);
-		t.fail();
-	} catch (error) {
-		t.is(error.message, 'Chalk template literal is missing 1 closing bracket (`}`)');
-	}
+	t.throws(() => chalkTemplate`{bold this shouldn't work ever\}`, {
+		message: 'Chalk template literal is missing 1 closing bracket (`}`)',
+	});
 
-	try {
-		console.log(chalkTemplate`{bold this shouldn't {inverse appear {underline ever\} :) \}`);
-		t.fail();
-	} catch (error) {
-		t.is(error.message, 'Chalk template literal is missing 3 closing brackets (`}`)');
-	}
+	t.throws(() => chalkTemplate`{bold this shouldn't {inverse appear {underline ever\} :) \}`, {
+		message: 'Chalk template literal is missing 3 closing brackets (`}`)',
+	});
 });
 
 test('throw if there is an invalid style', t => {
-	try {
-		console.log(chalkTemplate`{abadstylethatdoesntexist this shouldn't appear ever}`);
-		t.fail();
-	} catch (error) {
-		t.is(error.message, 'Unknown Chalk style: abadstylethatdoesntexist');
-	}
+	t.throws(() => chalkTemplate`{abadstylethatdoesntexist this shouldn't work ever}`, {
+		message: 'Unknown Chalk style: abadstylethatdoesntexist',
+	});
 });
 
 test('properly style multiline color blocks', t => {

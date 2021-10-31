@@ -51,12 +51,9 @@ test('correctly parses unicode/hex escapes', t => {
 });
 
 test('throws if an extra unescaped } is found', t => {
-	try {
-		console.log(chalkTemplate`{red hi!}}`);
-		t.fail();
-	} catch (error) {
-		t.is(error.message, 'Found extraneous } in Chalk template literal');
-	}
+	t.throws(() => chalkTemplate`{red hi!}}`, {
+		message: 'Found extraneous } in Chalk template literal',
+	});
 });
 
 test('should not parse upper-case escapes', t => {
