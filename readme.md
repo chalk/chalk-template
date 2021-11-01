@@ -4,8 +4,8 @@
 
 ## Install
 
-```
-$ npm install chalk-template
+```sh
+npm install chalk-template
 ```
 
 [`chalk`](https://github.com/chalk/chalk) is a required peer dependency.
