@@ -1,7 +1,7 @@
 {
 	"name": "chalk-template",
 	"version": "0.0.0",
-	"description": "Use tagged template literals with Chalk",
+	"description": "Terminal string styling with tagged template literals",
 	"license": "MIT",
 	"repository": "chalk/chalk-template",
 	"funding": "https://github.com/chalk/chalk-template?sponsor=1",

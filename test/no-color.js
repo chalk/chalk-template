@@ -52,6 +52,7 @@ test('correctly parses unicode/hex escapes', t => {
 
 test('throws if an extra unescaped } is found', t => {
 	t.throws(() => {
+		// eslint-disable-next-line no-unused-expressions
 		chalkTemplate`{red hi!}}`;
 	}, {
 		message: 'Found extraneous } in Chalk template literal',

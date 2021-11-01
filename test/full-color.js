@@ -20,12 +20,14 @@ test('properly handle escapes', t => {
 
 test('throw if there is an unclosed block', t => {
 	t.throws(() => {
+		// eslint-disable-next-line no-unused-expressions
 		chalkTemplate`{bold this shouldn't work ever\}`;
 	}, {
 		message: 'Chalk template literal is missing 1 closing bracket (`}`)',
 	});
 
 	t.throws(() => {
+		// eslint-disable-next-line no-unused-expressions
 		chalkTemplate`{bold this shouldn't {inverse appear {underline ever\} :) \}`;
 	}, {
 		message: 'Chalk template literal is missing 3 closing brackets (`}`)',
@@ -34,6 +36,7 @@ test('throw if there is an unclosed block', t => {
 
 test('throw if there is an invalid style', t => {
 	t.throws(() => {
+		// eslint-disable-next-line no-unused-expressions
 		chalkTemplate`{abadstylethatdoesntexist this shouldn't work ever}`;
 	}, {
 		message: 'Unknown Chalk style: abadstylethatdoesntexist',

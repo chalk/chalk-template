@@ -141,10 +141,10 @@ export default function chalkTemplate(firstString, ...arguments_) {
 
 	const parts = [firstString.raw[0]];
 
-	for (let i = 1; i < firstString.length; i++) {
+	for (let index = 1; index < firstString.length; index++) {
 		parts.push(
-			String(arguments_[i - 1]).replace(/[{}\\]/g, '\\$&'),
-			String(firstString.raw[i]),
+			String(arguments_[index - 1]).replace(/[{}\\]/g, '\\$&'),
+			String(firstString.raw[index]),
 		);
 	}
 
