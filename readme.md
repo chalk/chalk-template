@@ -31,6 +31,13 @@ console.log(chalk`
 	There are {bold 5280 feet} in a mile.
 	In {bold ${miles} miles}, there are {green.bold ${calculateFeet(miles)} feet}.
 `);
+
+
+console.log(chalk`
+	There are also {#FF0000 shorthand hex styles} for
+	both the {#ABCDEF foreground}, {#:123456 background},
+	or {#ABCDEF:123456 both}.
+`);
 ```
 
 ## API
@@ -47,7 +54,7 @@ console.log(chalk.bold.rgb(10, 100, 200)('Hello!'));
 console.log(chalkTemplate`{bold.rgb(10,100,200) Hello!}`);
 ```
 
-Note that function styles (`rgb()`, `hex()`, etc.) may not contain spaces between parameters.
+Note that function styles (`rgb()`, etc.) may not contain spaces between parameters.
 
 All interpolated values (`` chalkTemplate`${foo}` ``) are converted to strings via the `.toString()` method. All curly braces (`{` and `}`) in interpolated value strings are escaped.
 

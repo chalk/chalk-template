@@ -1,8 +1,8 @@
 import chalk from 'chalk';
 
 // eslint-disable-next-line unicorn/better-regex
-const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.))|(?:{(~)?(\w+(?:\([^)]*\))?(?:\.\w+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(})|((?:.|[\r\n\f])+?)/gi;
-const STYLE_REGEX = /(?:^|\.)(\w+)(?:\(([^)]*)\))?/g;
+const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.))|(?:{(~)?(#?[\w:]+(?:\([^)]*\))?(?:\.#?[\w:]+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(})|((?:.|[\r\n\f])+?)/gi;
+const STYLE_REGEX = /(?:^|\.)(?:(?:(\w+)(?:\(([^)]*)\))?)|(?:#(?=[:a-fA-F\d]{2,})([a-fA-F\d]{6})?(?::([a-fA-F\d]{6}))?))/g;
 const STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
 const ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.)|([^\\])/gi;
 
@@ -53,6 +53,18 @@ function parseArguments(name, arguments_) {
 	return results;
 }
 
+function parseHex(hex) {
+	const n = Number.parseInt(hex, 16);
+	return [
+		// eslint-disable-next-line no-bitwise
+		(n >> 16) & 0xFF,
+		// eslint-disable-next-line no-bitwise
+		(n >> 8) & 0xFF,
+		// eslint-disable-next-line no-bitwise
+		n & 0xFF,
+	];
+}
+
 function parseStyle(style) {
 	STYLE_REGEX.lastIndex = 0;
 
@@ -64,6 +76,14 @@ function parseStyle(style) {
 
 		if (matches[2]) {
 			results.push([name, ...parseArguments(name, matches[2])]);
+		} else if (matches[3] || matches[4]) {
+			if (matches[3]) {
+				results.push(['rgb', ...parseHex(matches[3])]);
+			}
+
+			if (matches[4]) {
+				results.push(['bgRgb', ...parseHex(matches[4])]);
+			}
 		} else {
 			results.push([name]);
 		}
