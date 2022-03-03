@@ -58,6 +58,16 @@ Note that function styles (`rgb()`, etc.) may not contain spaces between paramet
 
 All interpolated values (`` chalkTemplate`${foo}` ``) are converted to strings via the `.toString()` method. All curly braces (`{` and `}`) in interpolated value strings are escaped.
 
+## Template function
+
+You may also use the template function as an alternative to the tagged template function.
+
+```js
+import {template} from 'chalk-template';
+
+console.log(template('Today is {red hot}'));
+```
+
 ## Related
 
 - [chalk](https://github.com/chalk/chalk) - Terminal string styling done right
