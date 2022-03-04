@@ -117,7 +117,7 @@ function buildStyle(styles) {
 	return current;
 }
 
-function template(string) {
+export function template(string) {
 	const styles = [];
 	const chunks = [];
 	let chunk = [];
