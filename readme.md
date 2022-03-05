@@ -60,7 +60,9 @@ All interpolated values (`` chalkTemplate`${foo}` ``) are converted to strings v
 
 ## Template function
 
-You may also use the template function as an alternative to the tagged template function.
+This function can be useful if you need to wrap the template function. However, prefer the default export whenever possible.
+
+**Note:** It's up to you to properly escape the input.
 
 ```js
 import {template} from 'chalk-template';

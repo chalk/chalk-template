@@ -23,13 +23,17 @@ log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
 export default function chalkTemplate(text: TemplateStringsArray, ...placeholders: unknown[]): string;
 
 /**
-Terminal string styling. It is preferred that you use the template tag (default export) but this function is useful if you'd like to wrap the color template function.
+Terminal string styling.
+
+This function can be useful if you need to wrap the template function. However, prefer the default export whenever possible.
+
+__Note:__ It's up to you to properly escape the input.
 
 @example
 ```
-import { template } from 'chalk-template';
+import {template} from 'chalk-template';
 
-log(template('Today is {red hot}')
+console.log(template('Today is {red hot}'));
 ```
 */
 export function template(text: string): string;
