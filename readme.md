@@ -27,13 +27,13 @@ log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
 const miles = 18;
 const calculateFeet = miles => miles * 5280;
 
-console.log(chalk`
+console.log(chalkTemplate`
 	There are {bold 5280 feet} in a mile.
 	In {bold ${miles} miles}, there are {green.bold ${calculateFeet(miles)} feet}.
 `);
 
 
-console.log(chalk`
+console.log(chalkTemplate`
 	There are also {#FF0000 shorthand hex styles} for
 	both the {#ABCDEF foreground}, {#:123456 background},
 	or {#ABCDEF:123456 both}.
