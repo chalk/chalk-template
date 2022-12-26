@@ -24,7 +24,7 @@ function unescape(c) {
 	const bracket = c[1] === '{';
 
 	if ((u && !bracket && c.length === 5) || (c[0] === 'x' && c.length === 3)) {
-		return String.fromCharCode(Number.parseInt(c.slice(1), 16));
+		return String.fromCodePoint(Number.parseInt(c.slice(1), 16));
 	}
 
 	if (u && bracket) {

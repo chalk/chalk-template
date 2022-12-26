@@ -16,15 +16,13 @@ For printing to standard output (stdout):
 import chalkTemplate from 'chalk-template';
 import chalk from 'chalk';
 
-const log = console.log;
-
-log(chalkTemplate`
+console.log(chalkTemplate`
 CPU: {red ${cpu.totalPercent}%}
 RAM: {green ${ram.used / ram.total * 100}%}
 DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 `);
 
-log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
+console.log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
 
 const miles = 18;
 const calculateFeet = miles => miles * 5280;
@@ -46,9 +44,7 @@ For printing to standard error (stderr):
 ```js
 import {chalkTemplateStderr} from 'chalk-template';
 
-const error = console.error;
-
-error(chalkTemplateStderr`
+console.error(chalkTemplateStderr`
 CPU: {red ${cpu.totalPercent}%}
 RAM: {green ${ram.used / ram.total * 100}%}
 DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}

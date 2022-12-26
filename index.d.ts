@@ -5,7 +5,7 @@ Terminal string styling with [tagged template literals](https://developer.mozill
 ```
 import chalkTemplate from 'chalk-template';
 
-log(chalkTemplate`
+console.log(chalkTemplate`
 CPU: {red ${cpu.totalPercent}%}
 RAM: {green ${ram.used / ram.total * 100}%}
 DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
@@ -17,7 +17,7 @@ DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 import chalkTemplate from 'chalk-template';
 import chalk from 'chalk';
 
-log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
+console.log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
 ```
 */
 export default function chalkTemplate(text: TemplateStringsArray, ...placeholders: unknown[]): string;
@@ -30,7 +30,7 @@ configured for standard error instead of standard output
 ```
 import {chalkTemplateStderr as chalkTemplate} from 'chalk-template';
 
-log(chalkTemplate`
+console.log(chalkTemplate`
 CPU: {red ${cpu.totalPercent}%}
 RAM: {green ${ram.used / ram.total * 100}%}
 DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
@@ -42,7 +42,7 @@ DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 import {chalkTemplateStderr as chalkTemplate} from 'chalk-template';
 import {chalkStderr as chalk} from 'chalk';
 
-log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
+console.log(chalk.red.bgBlack(chalkTemplate`2 + 3 = {bold ${2 + 3}}`));
 ```
 */
 export function chalkTemplateStderr(text: TemplateStringsArray, ...placeholders: unknown[]): string;
