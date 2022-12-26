@@ -10,6 +10,8 @@ npm install chalk-template
 
 ## Usage
 
+For printing to standard output (stdout):
+
 ```js
 import chalkTemplate from 'chalk-template';
 import chalk from 'chalk';
@@ -32,11 +34,24 @@ console.log(chalkTemplate`
 	In {bold ${miles} miles}, there are {green.bold ${calculateFeet(miles)} feet}.
 `);
 
-
 console.log(chalkTemplate`
 	There are also {#FF0000 shorthand hex styles} for
 	both the {#ABCDEF foreground}, {#:123456 background},
 	or {#ABCDEF:123456 both}.
+`);
+```
+
+For printing to standard error (stderr):
+
+```js
+import {chalkTemplateStderr} from 'chalk-template';
+
+const error = console.error;
+
+error(chalkTemplateStderr`
+CPU: {red ${cpu.totalPercent}%}
+RAM: {green ${ram.used / ram.total * 100}%}
+DISK: {rgb(255,131,0) ${disk.used / disk.total * 100}%}
 `);
 ```
 
@@ -68,6 +83,12 @@ This function can be useful if you need to wrap the template function. However, 
 import {template} from 'chalk-template';
 
 console.log(template('Today is {red hot}'));
+```
+
+```js
+import {templateStderr} from 'chalk-template';
+
+console.error(templateStderr('Today is {red hot}'));
 ```
 
 ## Related

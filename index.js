@@ -92,81 +92,95 @@ function parseStyle(style) {
 	return results;
 }
 
-function buildStyle(styles) {
-	const enabled = {};
+function makeTemplate(chalk) {
+	function buildStyle(styles) {
+		const enabled = {};
 
-	for (const layer of styles) {
-		for (const style of layer.styles) {
-			enabled[style[0]] = layer.inverse ? null : style.slice(1);
-		}
-	}
-
-	let current = chalk;
-	for (const [styleName, styles] of Object.entries(enabled)) {
-		if (!Array.isArray(styles)) {
-			continue;
+		for (const layer of styles) {
+			for (const style of layer.styles) {
+				enabled[style[0]] = layer.inverse ? null : style.slice(1);
+			}
 		}
 
-		if (!(styleName in current)) {
-			throw new Error(`Unknown Chalk style: ${styleName}`);
-		}
-
-		current = styles.length > 0 ? current[styleName](...styles) : current[styleName];
-	}
-
-	return current;
-}
-
-export function template(string) {
-	const styles = [];
-	const chunks = [];
-	let chunk = [];
-
-	// eslint-disable-next-line max-params
-	string.replace(TEMPLATE_REGEX, (_, escapeCharacter, inverse, style, close, character) => {
-		if (escapeCharacter) {
-			chunk.push(unescape(escapeCharacter));
-		} else if (style) {
-			const string = chunk.join('');
-			chunk = [];
-			chunks.push(styles.length === 0 ? string : buildStyle(styles)(string));
-			styles.push({inverse, styles: parseStyle(style)});
-		} else if (close) {
-			if (styles.length === 0) {
-				throw new Error('Found extraneous } in Chalk template literal');
+		let current = chalk;
+		for (const [styleName, styles] of Object.entries(enabled)) {
+			if (!Array.isArray(styles)) {
+				continue;
 			}
 
-			chunks.push(buildStyle(styles)(chunk.join('')));
-			chunk = [];
-			styles.pop();
-		} else {
-			chunk.push(character);
+			if (!(styleName in current)) {
+				throw new Error(`Unknown Chalk style: ${styleName}`);
+			}
+
+			current = styles.length > 0 ? current[styleName](...styles) : current[styleName];
 		}
-	});
 
-	chunks.push(chunk.join(''));
-
-	if (styles.length > 0) {
-		throw new Error(`Chalk template literal is missing ${styles.length} closing bracket${styles.length === 1 ? '' : 's'} (\`}\`)`);
+		return current;
 	}
 
-	return chunks.join('');
+	function template(string) {
+		const styles = [];
+		const chunks = [];
+		let chunk = [];
+
+		// eslint-disable-next-line max-params
+		string.replace(TEMPLATE_REGEX, (_, escapeCharacter, inverse, style, close, character) => {
+			if (escapeCharacter) {
+				chunk.push(unescape(escapeCharacter));
+			} else if (style) {
+				const string = chunk.join('');
+				chunk = [];
+				chunks.push(styles.length === 0 ? string : buildStyle(styles)(string));
+				styles.push({inverse, styles: parseStyle(style)});
+			} else if (close) {
+				if (styles.length === 0) {
+					throw new Error('Found extraneous } in Chalk template literal');
+				}
+
+				chunks.push(buildStyle(styles)(chunk.join('')));
+				chunk = [];
+				styles.pop();
+			} else {
+				chunk.push(character);
+			}
+		});
+
+		chunks.push(chunk.join(''));
+
+		if (styles.length > 0) {
+			throw new Error(`Chalk template literal is missing ${styles.length} closing bracket${styles.length === 1 ? '' : 's'} (\`}\`)`);
+		}
+
+		return chunks.join('');
+	}
+
+	return template;
 }
 
-export default function chalkTemplate(firstString, ...arguments_) {
-	if (!Array.isArray(firstString) || !Array.isArray(firstString.raw)) {
-		// If chalkTemplate() was called by itself or with a string
-		throw new TypeError('A tagged template literal must be provided');
+function makeChalkTemplate(template) {
+	function chalkTemplate(firstString, ...arguments_) {
+		if (!Array.isArray(firstString) || !Array.isArray(firstString.raw)) {
+			// If chalkTemplate() was called by itself or with a string
+			throw new TypeError('A tagged template literal must be provided');
+		}
+
+		const parts = [firstString.raw[0]];
+
+		for (let index = 1; index < firstString.raw.length; index++) {
+			parts.push(
+				String(arguments_[index - 1]).replace(/[{}\\]/g, '\\$&'),
+				String(firstString.raw[index]),
+			);
+		}
+
+		return template(parts.join(''));
 	}
 
-	const parts = [firstString.raw[0]];
-
-	for (let index = 1; index < firstString.raw.length; index++) {
-		parts.push(
-			String(arguments_[index - 1]).replace(/[{}\\]/g, '\\$&'),
-			String(firstString.raw[index]),
-		);
-	}
-
-	return template(parts.join(''));
+	return chalkTemplate;
 }
+
+export const template = makeTemplate(chalk);
+export default makeChalkTemplate(template);
+
+export const templateStderr = makeTemplate(chalk.stderr);
+export const chalkTemplateStderr = makeChalkTemplate(templateStderr);
