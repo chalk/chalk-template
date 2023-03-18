@@ -46,7 +46,7 @@
 		"text"
 	],
 	"dependencies": {
-		"chalk": "^4.1.2"
+		"chalk": "^5.2.0"
 	},
 	"devDependencies": {
 		"ava": "^5.1.0",

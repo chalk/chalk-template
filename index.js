@@ -1,4 +1,5 @@
-import chalk from 'chalk';
+// eslint-disable-next-line unicorn/import-style
+import chalk, {chalkStderr} from 'chalk';
 
 // eslint-disable-next-line unicorn/better-regex
 const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.))|(?:{(~)?(#?[\w:]+(?:\([^)]*\))?(?:\.#?[\w:]+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(})|((?:.|[\r\n\f])+?)/gi;
@@ -182,5 +183,5 @@ function makeChalkTemplate(template) {
 export const template = makeTemplate(chalk);
 export default makeChalkTemplate(template);
 
-export const templateStderr = makeTemplate(chalk.stderr);
+export const templateStderr = makeTemplate(chalkStderr);
 export const chalkTemplateStderr = makeChalkTemplate(templateStderr);
