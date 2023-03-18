@@ -1,6 +1,6 @@
 {
 	"name": "chalk-template",
-	"version": "0.5.0",
+	"version": "1.0.0",
 	"description": "Terminal string styling with tagged template literals",
 	"license": "MIT",
 	"repository": "chalk/chalk-template",
