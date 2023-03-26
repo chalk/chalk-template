@@ -93,7 +93,7 @@ function parseStyle(style) {
 	return results;
 }
 
-function makeTemplate(chalk) {
+export function makeTemplate(chalk) {
 	function buildStyle(styles) {
 		const enabled = {};
 
@@ -158,7 +158,7 @@ function makeTemplate(chalk) {
 	return template;
 }
 
-function makeChalkTemplate(template) {
+export function makeChalkTemplate(template) {
 	function chalkTemplate(firstString, ...arguments_) {
 		if (!Array.isArray(firstString) || !Array.isArray(firstString.raw)) {
 			// If chalkTemplate() was called by itself or with a string

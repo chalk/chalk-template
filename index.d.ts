@@ -1,3 +1,5 @@
+import type {ChalkInstance} from 'chalk';
+
 /**
 Terminal string styling with [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates)
 
@@ -78,3 +80,39 @@ console.log(template('Today is {red hot}'));
 ```
 */
 export function templateStderr(text: string): string;
+
+/**
+Terminal string styling, using a custom chalk instance.
+
+This function can be useful if you need to create a template function using your own chalk instance.
+
+__Note:__ It's up to you to properly escape the input.
+
+@example
+```
+import {Chalk} from 'chalk'
+import {makeTemplate} from 'chalk-template';
+
+const template = makeTemplate(new Chalk());
+
+console.log(template('Today is {red hot}''));
+```
+*/
+export function makeTemplate(chalk: ChalkInstance): (text: string) => string;
+
+/**
+Terminal string styling with [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates),
+configured using a custom chalk instance.
+
+@example
+```
+import {Chalk} from 'chalk'
+import {makeTemplate, makeChalkTemplate} from 'chalk-template';
+
+const template = makeTemplate(new Chalk());
+const chalkTemplate = makeChalkTemplate(template);
+
+console.log(chalkTemplate`Today is {red hot}`);
+```
+*/
+export function makeChalkTemplate(template: (text: string) => string): (text: TemplateStringsArray, ...placeholders: unknown[]) => string;

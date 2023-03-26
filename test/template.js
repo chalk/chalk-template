@@ -1,7 +1,8 @@
 import test from 'ava';
-import {template as templateStdout, templateStderr} from '../index.js';
+import chalk from 'chalk';
+import {template as templateStdout, templateStderr, makeTemplate} from '../index.js';
 
-for (const [template, stdio] of [[templateStdout, 'stdout'], [templateStderr, 'stderr']]) {
+for (const [template, stdio] of [[templateStdout, 'stdout'], [templateStderr, 'stderr'], [makeTemplate(chalk), 'chalk']]) {
 	test(`[${stdio}] correctly parse and evaluate color-convert functions`, t => {
 		t.is(template('{bold.rgb(144,10,178).inverse Hello, {~inverse there!}}'),
 			'\u001B[1m\u001B[38;2;144;10;178m\u001B[7mHello, '
