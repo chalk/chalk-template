@@ -158,7 +158,7 @@ export function makeTemplate(chalk) {
 	return template;
 }
 
-export function makeChalkTemplate(template) {
+function makeChalkTemplate(template) {
 	function chalkTemplate(firstString, ...arguments_) {
 		if (!Array.isArray(firstString) || !Array.isArray(firstString.raw)) {
 			// If chalkTemplate() was called by itself or with a string
@@ -179,6 +179,8 @@ export function makeChalkTemplate(template) {
 
 	return chalkTemplate;
 }
+
+export const makeTaggedTemplate = chalkInstance => makeChalkTemplate(makeTemplate(chalkInstance));
 
 export const template = makeTemplate(chalk);
 export default makeChalkTemplate(template);

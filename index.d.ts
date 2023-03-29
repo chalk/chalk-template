@@ -107,12 +107,11 @@ configured using a custom chalk instance.
 @example
 ```
 import {Chalk} from 'chalk'
-import {makeTemplate, makeChalkTemplate} from 'chalk-template';
+import {makeTaggedTemplate} from 'chalk-template';
 
-const template = makeTemplate(new Chalk());
-const chalkTemplate = makeChalkTemplate(template);
+const chalkTemplate = makeTaggedTemplate(new Chalk());
 
 console.log(chalkTemplate`Today is {red hot}`);
 ```
 */
-export function makeChalkTemplate(template: (text: string) => string): (text: TemplateStringsArray, ...placeholders: unknown[]) => string;
+export function makeTaggedTemplate(chalk: ChalkInstance): (text: TemplateStringsArray, ...placeholders: unknown[]) => string;
