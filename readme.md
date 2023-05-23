@@ -97,8 +97,8 @@ The `makeTemplate` and `makeTaggedTemplate` functions are exported so functions 
 import {Chalk} from 'chalk'
 import {makeTemplate, makeTaggedTemplate} from 'chalk-template';
 
-const template = makeTemplate(new Chalk({ level: 3 }));
-const chalkTemplate = makeTaggedTemplate(new Chalk({ level: 3 }));
+const template = makeTemplate(new Chalk({level: 3}));
+const chalkTemplate = makeTaggedTemplate(new Chalk({level: 3}));
 
 console.log(template('Today is {red hot}'));
 console.log(chalkTemplate`Today is {red hot}`);
