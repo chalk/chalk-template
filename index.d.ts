@@ -82,9 +82,9 @@ console.log(template('Today is {red hot}'));
 export function templateStderr(text: string): string;
 
 /**
-Terminal string styling, using a custom chalk instance.
+Terminal string styling, using a custom Chalk instance.
 
-This function can be useful if you need to create a template function using your own chalk instance.
+This function can be useful if you need to create a template function using your own Chalk instance.
 
 __Note:__ It's up to you to properly escape the input.
 
@@ -102,7 +102,7 @@ export function makeTemplate(chalk: ChalkInstance): (text: string) => string;
 
 /**
 Terminal string styling with [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#tagged_templates),
-configured using a custom chalk instance.
+configured using a custom Chalk instance.
 
 @example
 ```
