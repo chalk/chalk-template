@@ -1,8 +1,8 @@
 import test from 'ava';
 import chalk from 'chalk';
-import chalkTemplateStdout, {chalkTemplateStderr} from '../index.js';
+import chalkTemplateStdout, {chalkTemplateStderr, makeTaggedTemplate} from '../index.js';
 
-for (const [chalkTemplate, stdio] of [[chalkTemplateStdout, 'stdout'], [chalkTemplateStderr, 'stderr']]) {
+for (const [chalkTemplate, stdio] of [[chalkTemplateStdout, 'stdout'], [chalkTemplateStderr, 'stderr'], [makeTaggedTemplate(chalk), 'chalk']]) {
 	test(`[${stdio}] return a regular string for a literal with no templates`, t => {
 		t.is(chalkTemplate`hello`, 'hello');
 	});

@@ -87,6 +87,23 @@ import {templateStderr} from 'chalk-template';
 console.error(templateStderr('Today is {red hot}'));
 ```
 
+## Create template functions using a custom Chalk instance
+
+The `makeTemplate` and `makeTaggedTemplate` functions are exported so functions can be created using a custom Chalk instance.
+
+**Note:** When using a function created with `makeTemplate`, it's up to you to properly escape the input.
+
+```js
+import {Chalk} from 'chalk'
+import {makeTemplate, makeTaggedTemplate} from 'chalk-template';
+
+const template = makeTemplate(new Chalk({level: 3}));
+const chalkTemplate = makeTaggedTemplate(new Chalk({level: 3}));
+
+console.log(template('Today is {red hot}'));
+console.log(chalkTemplate`Today is {red hot}`);
+```
+
 ## Related
 
 - [chalk](https://github.com/chalk/chalk) - Terminal string styling done right

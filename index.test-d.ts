@@ -1,6 +1,6 @@
 import {expectType} from 'tsd';
-import chalk from 'chalk';
-import chalkTemplate, {template, chalkTemplateStderr, templateStderr} from './index.js';
+import chalk, {Chalk} from 'chalk';
+import chalkTemplate, {template, chalkTemplateStderr, templateStderr, makeTemplate, makeTaggedTemplate} from './index.js';
 
 // -- Template literal --
 expectType<string>(chalkTemplate``);
@@ -17,3 +17,7 @@ expectType<string>(chalk.strikethrough.cyanBright.bgBlack(chalkTemplate`Works wi
 // -- Stderr Types --
 expectType<typeof chalkTemplate>(chalkTemplateStderr);
 expectType<typeof template>(templateStderr);
+
+// -- Make template functions --
+expectType<typeof template>(makeTemplate(new Chalk()));
+expectType<typeof chalkTemplate>(makeTaggedTemplate(new Chalk()));

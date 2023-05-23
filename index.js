@@ -93,7 +93,7 @@ function parseStyle(style) {
 	return results;
 }
 
-function makeTemplate(chalk) {
+export function makeTemplate(chalk) {
 	function buildStyle(styles) {
 		const enabled = {};
 
@@ -179,6 +179,8 @@ function makeChalkTemplate(template) {
 
 	return chalkTemplate;
 }
+
+export const makeTaggedTemplate = chalkInstance => makeChalkTemplate(makeTemplate(chalkInstance));
 
 export const template = makeTemplate(chalk);
 export default makeChalkTemplate(template);
