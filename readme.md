@@ -87,9 +87,9 @@ import {templateStderr} from 'chalk-template';
 console.error(templateStderr('Today is {red hot}'));
 ```
 
-## Create template functions using a custom chalk instance
+## Create template functions using a custom Chalk instance
 
-The `makeTemplate` and `makeTaggedTemplate` functions are exported so functions can be created using a custom chalk instance.
+The `makeTemplate` and `makeTaggedTemplate` functions are exported so functions can be created using a custom Chalk instance.
 
 **Note:** When using a function created with `makeTemplate`, it's up to you to properly escape the input.
 
