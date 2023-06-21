@@ -7,14 +7,16 @@
 	"funding": "https://github.com/chalk/chalk-template?sponsor=1",
 	"type": "module",
 	"exports": {
-		"types": "./index.d.ts",
-		"default": "./index.js"
+		"types": "./dist/index.d.ts",
+		"default": "./dist/index.js"
 	},
 	"engines": {
 		"node": ">=14.16"
 	},
 	"scripts": {
-		"test": "xo && ava test/index.js && cross-env FORCE_COLOR=0 ava test/no-color.js && cross-env FORCE_COLOR=3 TERM=dumb ava test/full-color.js && cross-env FORCE_COLOR=3 TERM=dumb ava test/template.js && tsd"
+		"build": "tsc --project tsconfig.json",
+		"clean": "rimraf dist",
+		"test": "ava test/index.js && cross-env FORCE_COLOR=0 ava test/no-color.js && cross-env FORCE_COLOR=3 TERM=dumb ava test/full-color.js && cross-env FORCE_COLOR=3 TERM=dumb ava test/template.js"
 	},
 	"files": [
 		"index.js",
@@ -48,9 +50,16 @@
 	"dependencies": {
 		"chalk": "^5.2.0"
 	},
+	"prettier": {
+		"singleQuote": true
+	},
 	"devDependencies": {
+		"@tsconfig/esm": "^1.0.3",
+		"@tsconfig/node14": "^1.0.3",
+		"@tsconfig/recommended": "^1.0.2",
 		"ava": "^5.2.0",
 		"cross-env": "^7.0.3",
+		"prettier": "^2.8.8",
 		"tsd": "^0.28.1",
 		"xo": "^0.54.2"
 	}

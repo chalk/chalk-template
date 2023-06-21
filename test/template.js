@@ -1,8 +1,8 @@
 import test from 'ava';
 import chalk from 'chalk';
-import {template as templateStdout, templateStderr, makeTemplate} from '../index.js';
+import {chalkTemplate, chalkTemplateStderr} from '../dist/index.js';
 
-for (const [template, stdio] of [[templateStdout, 'stdout'], [templateStderr, 'stderr'], [makeTemplate(chalk), 'chalk']]) {
+for (const [template, stdio] of [[chalkTemplate, 'stdout'], [chalkTemplateStderr, 'stderr']]) {
 	test(`[${stdio}] correctly parse and evaluate color-convert functions`, t => {
 		t.is(template('{bold.rgb(144,10,178).inverse Hello, {~inverse there!}}'),
 			'\u001B[1m\u001B[38;2;144;10;178m\u001B[7mHello, '
@@ -15,31 +15,20 @@ for (const [template, stdio] of [[templateStdout, 'stdout'], [templateStderr, 's
 			+ '\u001B[48;2;144;10;178mthere!\u001B[49m\u001B[22m');
 	});
 
-	test(`[${stdio}] properly handle escapes`, t => {
-		t.is(template('{bold hello \\{in brackets\\}}'),
-			'\u001B[1mhello {in brackets}\u001B[22m');
+	test(`[${stdio}] no need to escapes`, t => {
+		t.is(template('{bold hello \{in brackets\}}'),
+		'\x1B[1mhello \x1B[22m\x1B[1m{\x1B[22m\x1B[1min brackets\x1B[22m}');
 	});
 
-	test(`[${stdio}] throw if there is an unclosed block`, t => {
-		t.throws(() => {
-			template('{bold this shouldn\'t work ever\\}');
-		}, {
-			message: 'Chalk template literal is missing 1 closing bracket (`}`)',
-		});
-
-		t.throws(() => {
-			template('{bold this shouldn\'t {inverse appear {underline ever\\} :) \\}');
-		}, {
-			message: 'Chalk template literal is missing 3 closing brackets (`}`)',
-		});
+	test(`[${stdio}] do not throw if there is an unclosed block`, t => {
+		t.is(template('{bold this should work\}'),'\x1B[1mthis should work\x1B[22m')
+		t.is(template('{bold bold does not work {inverse inverse works {underline underline works\} :) \}'),'{bold bold does not work \x1B[7minverse works \x1B[27m\x1B[7m\x1B[4munderline works\x1B[24m\x1B[27m\x1B[7m :) \x1B[27m');
 	});
 
 	test(`[${stdio}] throw if there is an invalid style`, t => {
-		t.throws(() => {
-			template('{abadstylethatdoesntexist this shouldn\'t work ever}');
-		}, {
-			message: 'Unknown Chalk style: abadstylethatdoesntexist',
-		});
+		t.is(
+			template('{abadstylethatdoesntexist this should work as unprocessed}'),
+			`{abadstylethatdoesntexist this should work as unprocessed}`);
 	});
 
 	test(`[${stdio}] properly style multiline color blocks`, t => {
