@@ -2,7 +2,7 @@
 import chalk, {chalkStderr} from 'chalk';
 
 const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.))|(?:{(~)?(#?[\w:]+(?:\([^)]*\))?(?:\.#?[\w:]+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(})|((?:.|[\r\n\f])+?)/gi;
-const STYLE_REGEX = /(?:^|\.)(?:(?:(\w+)(?:\(([^)]*)\))?)|(?:#(?=[:a-fA-F\d]{2,})([a-fA-F\d]{6})?(?::([a-fA-F\d]{6}))?))/g;
+const STYLE_REGEX = /(?:^|\.)(?:(?:(\w+)(?:\(([^)]*)\))?)|(?:#(?=[:a-fA-F\d]{2,})([a-fA-F\d]{6}|[a-fA-F\d]{3})?(?::([a-fA-F\d]{6}|[a-fA-F\d]{3}))?))/g;
 const STRING_REGEX = /^(['"])((?:\\.|(?!\1)[^\\])*)\1$/;
 const ESCAPE_REGEX = /\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.)|([^\\])/gi;
 
@@ -54,6 +54,10 @@ function parseArguments(name, arguments_) {
 }
 
 function parseHex(hex) {
+	if (hex.length === 3) {
+		hex = [...hex].map(character => character + character).join('');
+	}
+
 	const n = Number.parseInt(hex, 16);
 	return [
 		// eslint-disable-next-line no-bitwise

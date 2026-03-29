@@ -84,3 +84,11 @@ test('should handle special hex case', t => {
 	t.is(chalkTemplate`{#:FF0000.bold hello}`, '\u001B[48;2;255;0;0m\u001B[1mhello\u001B[22m\u001B[49m');
 	t.is(chalkTemplate`{#00FF00:FF0000.bold hello}`, '\u001B[38;2;0;255;0m\u001B[48;2;255;0;0m\u001B[1mhello\u001B[22m\u001B[49m\u001B[39m');
 });
+
+test('should handle shorthand 3-digit hex', t => {
+	t.is(chalkTemplate`{#F00 hello}`, '\u001B[38;2;255;0;0mhello\u001B[39m');
+	t.is(chalkTemplate`{#:0F0 hello}`, '\u001B[48;2;0;255;0mhello\u001B[49m');
+	t.is(chalkTemplate`{#F00:0F0 hello}`, '\u001B[38;2;255;0;0m\u001B[48;2;0;255;0mhello\u001B[49m\u001B[39m');
+	t.is(chalkTemplate`{bold.#F00 hello}`, '\u001B[1m\u001B[38;2;255;0;0mhello\u001B[39m\u001B[22m');
+	t.is(chalkTemplate`{#FFF hello}`, '\u001B[38;2;255;255;255mhello\u001B[39m');
+});
