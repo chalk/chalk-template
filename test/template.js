@@ -42,6 +42,28 @@ for (const [template, stdio] of [[templateStdout, 'stdout'], [templateStderr, 's
 		});
 	});
 
+	test(`[${stdio}] throw if there is a style inherited from the prototype chain`, t => {
+		t.teardown(() => {
+			delete globalThis.chalkTemplateWasExecuted;
+		});
+
+		for (const styleName of ['toString', 'constructor', '__proto__', 'valueOf', 'apply', 'call', 'bind', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable', 'toLocaleString', '__defineGetter__', '__lookupSetter__', 'name', 'length', 'level', 'visible', 'arguments', 'caller']) {
+			t.throws(() => {
+				template(`{${styleName}.constructor("globalThis.chalkTemplateWasExecuted = true") nope}`);
+			}, {
+				message: `Unknown Chalk style: ${styleName}`,
+			});
+		}
+
+		t.throws(() => {
+			template('{red.constructor("globalThis.chalkTemplateWasExecuted = true") nope}');
+		}, {
+			message: 'Unknown Chalk style: constructor',
+		});
+
+		t.is(globalThis.chalkTemplateWasExecuted, undefined);
+	});
+
 	test(`[${stdio}] properly style multiline color blocks`, t => {
 		t.is(
 			template(`{bold

@@ -1,5 +1,5 @@
 // eslint-disable-next-line unicorn/import-style
-import chalk, {chalkStderr} from 'chalk';
+import chalk, {chalkStderr, modifierNames, foregroundColorNames, backgroundColorNames} from 'chalk';
 
 const TEMPLATE_REGEX = /(?:\\(u(?:[a-f\d]{4}|{[a-f\d]{1,6}})|x[a-f\d]{2}|.))|(?:{(~)?(#?[\w:]+(?:\([^)]*\))?(?:\.#?[\w:]+(?:\([^)]*\))?)*)(?:[ \t]|(?=\r?\n)))|(})|((?:.|[\r\n\f])+?)/gi;
 const STYLE_REGEX = /(?:^|\.)(?:(?:(\w+)(?:\(([^)]*)\))?)|(?:#(?=[:a-fA-F\d]{2,})([a-fA-F\d]{6})?(?::([a-fA-F\d]{6}))?))/g;
@@ -17,6 +17,19 @@ const ESCAPES = new Map([
 	['\\', '\\'],
 	['e', '\u001B'],
 	['a', '\u0007'],
+]);
+
+// Style names are resolved against Chalk's own name tables.
+const STYLE_NAMES = new Set([
+	...modifierNames,
+	...foregroundColorNames,
+	...backgroundColorNames,
+	'rgb',
+	'hex',
+	'ansi256',
+	'bgRgb',
+	'bgHex',
+	'bgAnsi256',
 ]);
 
 function unescape(c) {
@@ -94,7 +107,8 @@ function parseStyle(style) {
 
 export function makeTemplate(chalk) {
 	function buildStyle(styles) {
-		const enabled = {};
+		// Null prototype, so that a `__proto__` style name becomes an ordinary key and is rejected below instead of silently repointing the prototype.
+		const enabled = Object.create(null);
 
 		for (const layer of styles) {
 			for (const style of layer.styles) {
@@ -108,7 +122,8 @@ export function makeTemplate(chalk) {
 				continue;
 			}
 
-			if (!(styleName in current)) {
+			// Chalk defines its styles on the prototype, so `Object.hasOwn` would reject every style. The set check must come first, so that a prototype member is never touched.
+			if (!STYLE_NAMES.has(styleName) || !(styleName in current)) {
 				throw new Error(`Unknown Chalk style: ${styleName}`);
 			}
 
